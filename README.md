@@ -29,7 +29,7 @@ Users should be able to:
 ### Links
 
 - Live Site URL: [LIVE](https://kiwinicki.github.io/ip-address-tracker-page/)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/Kiwinicki)
+- Frontend Mentor - [@Kiwinicki](https://www.frontendmentor.io/profile/Kiwinicki)
 
 ### Built with
 
