@@ -56,6 +56,10 @@ body {
 		border-top-right-radius: 1rem;
 		border-bottom-right-radius: 1rem;
 		background-color: black;
+		cursor: pointer;
+		&:hover {
+			background-color: $very-dark-gray;
+		}
 	}
 	&__info-container {
 		$height: 18rem;
@@ -151,7 +155,7 @@ body {
 			&:not(:first-of-type) {
 				border-left: 1px solid $dark-gray;
 			}
-			padding: 0 2rem;
+			padding: 0 1rem 0 2rem;
 			margin: 1.75rem 0;
 			flex: 1 0 25%;
 		}

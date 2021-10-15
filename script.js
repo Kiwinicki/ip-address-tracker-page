@@ -1,6 +1,6 @@
 (async () => {
 	// create map and set initial position
-	const map = L.map('map').setView([0, 0], 5);
+	const map = L.map('map').setView([0, 0], 2);
 
 	// set zoom control on bottom left corner
 	map.zoomControl.setPosition('bottomleft');
@@ -25,15 +25,23 @@
 		e.preventDefault();
 		if (regexIp.test(input.value)) {
 			try {
-				const response = await fetch(`https://geo.ipify.org/api/v2/country?apiKey=${apiKey}&ipAddress=${input.value}`);
+				const response = await fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&ipAddress=${input.value}`);
 				if (response.status === 200) {
 					const json = await response.json();
 					console.log(json);
 
 					ipField.innerHTML = json.ip;
-					locationField.innerHTML = `${json.location.region}, ${json.location.country}`;
+					locationField.innerHTML = `${json.location.city}, ${json.location.region} ${json.location.postalCode}`;
 					timezoneField.innerHTML = `UTC ${json.location.timezone}`;
 					ispField.innerHTML = json.isp;
+
+					console.log(json.location.lat, json.location.lng);
+					const locationIcon = L.icon({
+						iconUrl: './images/icon-location.svg',
+						iconSize: [46, 56],
+					});
+					const marker = L.marker([json.location.lat, json.location.lng], { icon: locationIcon }).addTo(map);
+					map.flyTo([json.location.lat, json.location.lng], 13);
 				} else {
 					return Promise.reject(`HTTP error: ${response.status}`);
 				}
