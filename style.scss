@@ -4,6 +4,7 @@
 $very-dark-gray: hsl(0, 0%, 17%);
 $dark-gray: hsl(0, 0%, 59%);
 
+$error-red: rgb(223, 0, 0);
 $white: white;
 
 * {
@@ -52,8 +53,19 @@ body {
 		width: 100%;
 		max-width: 550px;
 	}
+	&__info-container {
+		$height: 18rem;
+		height: $height;
+		margin-bottom: calc((#{$height/2} + 25px) * (-1)); // (height / 2) + gap
+		z-index: 9999;
+		width: 100%;
+	}
+}
+
+.form {
+	position: relative;
 	&__input {
-		padding: 18px;
+		padding: 16px;
 		border: none;
 		border-top-left-radius: 1rem;
 		border-bottom-left-radius: 1rem;
@@ -61,6 +73,10 @@ body {
 		font-weight: 500;
 		flex-grow: 1;
 		width: 100%;
+		border: 2px solid transparent;
+		&--error {
+			border: 2px solid $error-red;
+		}
 	}
 	&__search-btn {
 		padding: 18px 22px;
@@ -73,12 +89,13 @@ body {
 			background-color: $very-dark-gray;
 		}
 	}
-	&__info-container {
-		$height: 18rem;
-		height: $height;
-		margin-bottom: calc((#{$height/2} + 25px) * (-1)); // (height / 2) + gap
-		z-index: 9999;
-		width: 100%;
+	&__validation-error {
+		position: absolute;
+		bottom: -5px;
+		transform: translateY(100%);
+		margin-left: 18px;
+		color: $error-red;
+		// visibility: hidden;
 	}
 }
 

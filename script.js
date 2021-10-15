@@ -12,6 +12,7 @@
 	L.tileLayer(tilesURL, { attribution }).addTo(map);
 
 	const input = document.querySelector('#ip-input');
+	const errorText = document.querySelector('#ip-address-error');
 	const searchBtn = document.querySelector('#search-btn');
 
 	const apiKey = 'at_eJiYbhl3LXhXmJAL2UwrcQrDlk3Bd';
@@ -26,11 +27,12 @@
 	searchBtn.addEventListener('click', async (e) => {
 		e.preventDefault();
 		if (regexIp.test(input.value)) {
+			errorText.style.setProperty('visibility', 'hidden');
 			try {
 				const response = await fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&ipAddress=${input.value}`);
 				if (response.status === 200) {
 					const json = await response.json();
-					console.log(json);
+					// console.log(json);
 
 					// insert fetched data to DOM
 					ipField.innerHTML = json.ip;
@@ -50,13 +52,19 @@
 					// move and zoom map to marker position
 					map.flyTo([json.location.lat, json.location.lng], 13);
 				} else {
-					return Promise.reject(`HTTP error: ${response.status}`);
+					throw new Error(response.status);
 				}
 			} catch (error) {
-				console.log(error);
+				// add red border and error text
+				input.classList.add('form__input--error');
+				errorText.innerHTML = 'Connection error';
+				errorText.style.setProperty('visibility', 'visible');
 			}
 		} else {
-			console.log('invalid ip address');
+			// add red border and error text
+			input.classList.add('form__input--error');
+			errorText.innerHTML = 'Invalid IP address';
+			errorText.style.setProperty('visibility', 'visible');
 		}
 	});
 })();

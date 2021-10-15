@@ -24,14 +24,13 @@
 	<header class="page-header">
 		<h1 class="page-header__title">IP Address Tracker</h1>
 
-		<form class="page-header__form">
+		<form class="form page-header__form">
 			<label for="ip-address" class="sr-only">Search for any IP address or domain</label>
-			<input type="text" id="ip-input" placeholder="Search for any IP address or domain"
-				class="page-header__input">
-			<button type="submit" id="search-btn" class="page-header__search-btn">
-				<img src="./images/icon-arrow.svg" alt="arrow icon" class="page-header__search-btn-icon">
+			<input type="text" id="ip-input" placeholder="Search for any IP address or domain" class="form__input">
+			<button type="submit" id="search-btn" class="form__search-btn">
+				<img src="./images/icon-arrow.svg" alt="arrow icon" class="form__search-btn-icon">
 			</button>
-			<span class="">Invalid IP address</span>
+			<span id="ip-address-error" class="form__validation-error"></span>
 		</form>
 
 		<div class="info-container page-header__info-container">
