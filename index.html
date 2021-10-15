@@ -25,9 +25,9 @@
 
 		<!-- <label for="ip-address">will be visually hidden and aria added</label> -->
 		<form class="page-header__form">
-			<input type="text" id="ip-address" placeholder="Search for any IP address or domain"
+			<input type="text" id="ip-input" placeholder="Search for any IP address or domain"
 				class="page-header__input">
-			<button class="page-header__search-btn">
+			<button type="submit" id="search-btn" class="page-header__search-btn">
 				<img src="./images/icon-arrow.svg" alt="arrow icon" class="page-header__search-btn-icon">
 			</button>
 		</form>
@@ -35,21 +35,21 @@
 		<div class="info-container page-header__info-container">
 			<div class="info-item info-container__item">
 				<p class="info-item__title">IP Address</p>
-				<p class="info-item__text">192.168.0.17</p>
+				<p class="info-item__text" id="ip">__.__.__.__</p>
 			</div>
 			<div class="info-item info-container__item">
 				<p class="info-item__title">Location</p>
-				<p class="info-item__text">Brooklyn</p>
+				<p class="info-item__text" id="location">Region, country</p>
 			</div>
 			<div class="info-item info-container__item">
 				<p class="info-item__title">Timezone</p>
-				<p class="info-item__text">UTC
+				<p class="info-item__text" id="timezone">UTC 0:00
 					<!-- dynamic UTC time -->
 				</p>
 			</div>
 			<div class="info-item info-container__item">
 				<p class="info-item__title">ISP</p>
-				<p class="info-item__text">SpaceX Starlink</p>
+				<p class="info-item__text" id="isp">ISP name</p>
 			</div>
 		</div>
 	</header>

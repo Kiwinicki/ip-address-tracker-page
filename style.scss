@@ -27,8 +27,6 @@ body {
 	background-image: url('./images/pattern-bg.png');
 	background-position: center;
 	background-size: cover;
-	// flex-wrap: wrap;
-	// justify-content: center;
 	flex-direction: column;
 	align-items: center;
 	gap: 28px;
@@ -40,7 +38,7 @@ body {
 	&__form {
 		display: flex;
 		width: 100%;
-		max-width: 550px; // fix
+		max-width: 550px;
 	}
 	&__input {
 		padding: 18px;
@@ -61,12 +59,10 @@ body {
 	}
 	&__info-container {
 		$height: 18rem;
-		width: 100%;
 		height: $height;
-		margin-bottom: calc((#{$height/2} + 25px) * (-1)); // height - gap
-		// breakpoints for moments when elems line up
+		margin-bottom: calc((#{$height/2} + 25px) * (-1)); // (height / 2) + gap
 		z-index: 9999;
-		// padding: 1rem;
+		width: 100%;
 	}
 }
 
@@ -76,23 +72,22 @@ body {
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
-	padding: 1rem;
+	padding: 1rem 0;
 	&__item {
-		// flex: 1 0 25%;
+		flex: 1 0 100%;
 	}
 }
 
 .info-item {
 	margin: 0.5rem 0 1rem;
 	text-align: center;
-	padding: 0 3rem;
 	&__title {
 		color: $dark-gray;
 		text-transform: uppercase;
 		font-size: 0.75rem;
 		font-weight: 500;
 		margin-bottom: 5px;
-		letter-spacing: 1px;
+		letter-spacing: 2px;
 	}
 	&__text {
 		font-weight: 500;
@@ -105,10 +100,60 @@ body {
 	flex-grow: 1;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 576px) {
 	.page-header {
 		&__title {
 			font-size: 32px;
+		}
+		&__info-container {
+			$height: 12rem;
+			height: $height;
+			margin-bottom: calc((#{$height/2} + 25px) * (-1));
+		}
+	}
+
+	.info-container {
+		&__item {
+			&:not(:nth-of-type(2n-1)) {
+				border-left: 1px solid $dark-gray;
+			}
+			flex: 1 0 50%;
+			text-align: left;
+			padding: 0 2rem 0 1rem;
+		}
+	}
+
+	.info-item {
+		&__title {
+			transform: translateY(-50%);
+		}
+		&__text {
+			font-weight: 700;
+			font-size: 26px;
+		}
+	}
+}
+
+@media only screen and (min-width: 1024px) {
+	.page-header {
+		&__info-container {
+			width: Min(100%, 1100px);
+			$height: 10rem;
+			height: $height;
+			margin-bottom: calc((#{$height/2} + 25px) * (-1));
+		}
+	}
+
+	.info-container {
+		margin-top: 25px;
+		flex-wrap: nowrap;
+		&__item {
+			&:not(:first-of-type) {
+				border-left: 1px solid $dark-gray;
+			}
+			padding: 0 2rem;
+			margin: 1.75rem 0;
+			flex: 1 0 25%;
 		}
 	}
 }
