@@ -183,7 +183,6 @@ body {
             transform: translateY(-50%);
   }
   .info-item__text {
-    font-weight: 700;
     font-size: 26px;
   }
 }
