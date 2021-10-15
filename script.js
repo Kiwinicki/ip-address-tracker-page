@@ -13,9 +13,11 @@
 
 	const input = document.querySelector('#ip-input');
 	const searchBtn = document.querySelector('#search-btn');
+
 	const apiKey = 'at_eJiYbhl3LXhXmJAL2UwrcQrDlk3Bd';
 	const regexIp = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 
+	// get fields for dynamic change from DOM
 	const ipField = document.querySelector('#ip');
 	const locationField = document.querySelector('#location');
 	const timezoneField = document.querySelector('#timezone');
@@ -30,17 +32,22 @@
 					const json = await response.json();
 					console.log(json);
 
+					// insert fetched data to DOM
 					ipField.innerHTML = json.ip;
 					locationField.innerHTML = `${json.location.city}, ${json.location.region} ${json.location.postalCode}`;
 					timezoneField.innerHTML = `UTC ${json.location.timezone}`;
 					ispField.innerHTML = json.isp;
 
-					console.log(json.location.lat, json.location.lng);
+					// create icon
 					const locationIcon = L.icon({
 						iconUrl: './images/icon-location.svg',
 						iconSize: [46, 56],
 					});
+
+					// create marker and add it to map
 					const marker = L.marker([json.location.lat, json.location.lng], { icon: locationIcon }).addTo(map);
+
+					// move and zoom map to marker position
 					map.flyTo([json.location.lat, json.location.lng], 13);
 				} else {
 					return Promise.reject(`HTTP error: ${response.status}`);

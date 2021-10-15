@@ -3,6 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
@@ -23,13 +24,14 @@
 	<header class="page-header">
 		<h1 class="page-header__title">IP Address Tracker</h1>
 
-		<!-- <label for="ip-address">will be visually hidden and aria added</label> -->
 		<form class="page-header__form">
+			<label for="ip-address" class="sr-only">Search for any IP address or domain</label>
 			<input type="text" id="ip-input" placeholder="Search for any IP address or domain"
 				class="page-header__input">
 			<button type="submit" id="search-btn" class="page-header__search-btn">
 				<img src="./images/icon-arrow.svg" alt="arrow icon" class="page-header__search-btn-icon">
 			</button>
+			<span class="">Invalid IP address</span>
 		</form>
 
 		<div class="info-container page-header__info-container">
@@ -43,9 +45,7 @@
 			</div>
 			<div class="info-item info-container__item">
 				<p class="info-item__title">Timezone</p>
-				<p class="info-item__text" id="timezone">UTC 0:00
-					<!-- dynamic UTC time -->
-				</p>
+				<p class="info-item__text" id="timezone">UTC 0:00</p>
 			</div>
 			<div class="info-item info-container__item">
 				<p class="info-item__title">ISP</p>
