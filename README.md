@@ -24,7 +24,7 @@ Users should be able to:
 ### Screenshot
 
 ![desktop solution](./solution-screenshots/solution-desktop.png)
-![mobile solution](./solution-screenshots/iphoneX-desktop.png)
+![mobile solution](./solution-screenshots/solution-iphoneX.png)
 
 ### Links
 
