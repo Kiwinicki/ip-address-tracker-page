@@ -16,7 +16,7 @@ $white: white;
 body {
 	height: 100vh;
 	font-family: 'Rubik', sans-serif;
-	background: #000;
+	background: $very-dark-gray;
 	display: flex;
 	flex-direction: column;
 }
@@ -95,7 +95,6 @@ body {
 		transform: translateY(100%);
 		margin-left: 18px;
 		color: $error-red;
-		// visibility: hidden;
 	}
 }
 

@@ -1,15 +1,10 @@
 (async () => {
-	// create map and set initial position
-	const map = L.map('map').setView([0, 0], 2);
-
-	// set zoom control on bottom left corner
-	map.zoomControl.setPosition('bottomleft');
-
 	const tilesURL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 	const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
-	// add attribution
-	L.tileLayer(tilesURL, { attribution }).addTo(map);
+	const map = L.map('map').setView([0, 0], 2); // create map and set initial position
+	map.zoomControl.setPosition('bottomleft'); // set zoom control on bottom left corner
+	L.tileLayer(tilesURL, { attribution }).addTo(map); // add attribution
 
 	const input = document.querySelector('#ip-input');
 	const errorText = document.querySelector('#ip-address-error');
@@ -24,47 +19,63 @@
 	const timezoneField = document.querySelector('#timezone');
 	const ispField = document.querySelector('#isp');
 
+	const showError = (errText) => {
+		input.classList.add('form__input--error');
+		errorText.innerHTML = errText;
+		errorText.style.setProperty('visibility', 'visible');
+	};
+
+	const hideError = () => errorText.style.setProperty('visibility', 'hidden');
+
+	const makeAPIrequest = async (apiKey, ip = '') => {
+		const res = await fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}${ip && `&ipAddress=${input.value}`}`);
+		if (res.status === 200) {
+			return await res.json();
+		} else {
+			throw new Error(res.status);
+		}
+	};
+
+	const insertDataToDOM = ({ ip, location, isp }) => {
+		ipField.innerHTML = ip;
+		locationField.innerHTML = `${location.city}, ${location.region} ${location.postalCode}`;
+		timezoneField.innerHTML = `UTC ${location.timezone}`;
+		ispField.innerHTML = isp;
+	};
+
+	const locationIcon = L.icon({
+		iconUrl: './images/icon-location.svg',
+		iconSize: [46, 56],
+	});
+
+	const addMarker = (lat, lng) => {
+		return L.marker([lat, lng], { icon: locationIcon }).addTo(map); // create marker and add it to map
+	};
+
+	window.addEventListener('DOMContentLoaded', async () => {
+		const json = await makeAPIrequest(apiKey);
+		console.log(json);
+		insertDataToDOM(json);
+		addMarker(json.location.lat, json.location.lng);
+		map.flyTo([json.location.lat, json.location.lng], 10);
+	});
+
 	searchBtn.addEventListener('click', async (e) => {
 		e.preventDefault();
 		if (regexIp.test(input.value)) {
-			errorText.style.setProperty('visibility', 'hidden');
 			try {
-				const response = await fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&ipAddress=${input.value}`);
-				if (response.status === 200) {
-					const json = await response.json();
-					// console.log(json);
-
-					// insert fetched data to DOM
-					ipField.innerHTML = json.ip;
-					locationField.innerHTML = `${json.location.city}, ${json.location.region} ${json.location.postalCode}`;
-					timezoneField.innerHTML = `UTC ${json.location.timezone}`;
-					ispField.innerHTML = json.isp;
-
-					// create icon
-					const locationIcon = L.icon({
-						iconUrl: './images/icon-location.svg',
-						iconSize: [46, 56],
-					});
-
-					// create marker and add it to map
-					const marker = L.marker([json.location.lat, json.location.lng], { icon: locationIcon }).addTo(map);
-
-					// move and zoom map to marker position
-					map.flyTo([json.location.lat, json.location.lng], 13);
-				} else {
-					throw new Error(response.status);
-				}
-			} catch (error) {
-				// add red border and error text
-				input.classList.add('form__input--error');
-				errorText.innerHTML = 'Connection error';
-				errorText.style.setProperty('visibility', 'visible');
+				hideError();
+				const json = await makeAPIrequest(apiKey, input.value);
+				console.log(json);
+				insertDataToDOM(json);
+				addMarker(json.location.lat, json.location.lng);
+				map.flyTo([json.location.lat, json.location.lng], 13);
+			} catch (err) {
+				console.log(err);
+				showError('Connection error');
 			}
 		} else {
-			// add red border and error text
-			input.classList.add('form__input--error');
-			errorText.innerHTML = 'Invalid IP address';
-			errorText.style.setProperty('visibility', 'visible');
+			showError('Invalid IP address');
 		}
 	});
 })();
